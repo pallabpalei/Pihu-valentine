@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Ankita ❤️</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #ff758c, #ff7eb3);
+  color: white;
+  text-align: center;
+}
+
+section {
+  min-height: 100vh;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+h1 {
+  font-size: 2.2em;
+  margin-bottom: 10px;
+}
+
+p {
+  font-size: 1.1em;
+  line-height: 1.6;
+  max-width: 90%;
+}
+
+button {
+  padding: 14px 30px;
+  border: none;
+  border-radius: 40px;
+  background: #ff4d6d;
+  color: white;
+  font-size: 1em;
+  margin-top: 20px;
+}
+
+.hidden { display: none; }
+
+img {
+  width: 75%;
+  max-width: 280px;
+  height: 360px;
+  object-fit: cover;
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+  opacity: 0;
+  animation: fadeZoom 6s ease-in-out forwards;
+}
+
+/* Romantic fade + zoom */
+@keyframes fadeZoom {
+  0% {
+    opacity: 0;
+    transform: scale(1);
+  }
+  15% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.08);
+  }
+}
+
+
+.heart {
+  position: fixed;
+  bottom: -20px;
+  font-size: 22px;
+  animation: float 6s linear infinite;
+}
+
+@keyframes float {
+  from { transform: translateY(0); opacity: 1; }
+  to { transform: translateY(-100vh); opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- MUSIC -->
+<audio id="bgMusic" autoplay loop muted>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<!-- PAGE 1 -->
+<section id="p1">
+  <h1>Happy Valentine’s Day Ankita ❤️</h1>
+  <p>Ankita, before anything else… I need you to know how deeply special you are to me 🥺</p>
+  <button onclick="enableSound(); go(2)">Next 💕</button>
+</section>
+
+<!-- PAGE 2 -->
+<section id="p2" class="hidden">
+  <h1>Wanna say My Diva 💖</h1>
+  <img id="slide" src="photo1.jpg">
+  <button onclick="goType()">Next 💌</button>
+</section>
+
+<!-- PAGE 3 -->
+<section id="p3" class="hidden">
+  <h1>Dear Ankita 💝</h1>
+  <p id="text"></p>
+  <button onclick="go(4)">One last thing 🌹</button>
+</section>
+
+<!-- PAGE 4 -->
+<section id="p4" class="hidden">
+  <h1>Ankita, will you be my Valentine? 🌹</h1>
+  <button onclick="yes()">YES ❤️</button>
+  <button onclick="nope()">NO 🙈</button>
+</section>
+
+<script>
+function go(n){
+  document.querySelectorAll("section").forEach(s=>s.classList.add("hidden"));
+  document.getElementById("p"+n).classList.remove("hidden");
+}
+
+// Slideshow (slow + romantic animation)
+let pics = ["photo1.jpg", "photo2.jpg", "photo3.jpg"];
+let idx = 0;
+let slide = document.getElementById("slide");
+
+function changePhoto() {
+  slide.style.animation = "none";   // reset animation
+  slide.offsetHeight;               // force reflow
+  slide.src = pics[idx];
+  slide.style.animation = "fadeZoom 6s ease-in-out forwards";
+  idx = (idx + 1) % pics.length;
+}
+
+// first photo
+changePhoto();
+
+// change every 6 seconds (slow & smooth)
+setInterval(changePhoto, 4000);
+
+// Typewriter
+let msg="Ankita ❤️\n\nYou are my peace in chaos,\nmy smile on bad days,\nmy favorite thought every night.\n\nI don’t promise perfection,\nI promise effort, loyalty,\nand endless love.\n\nForever yours 💕";
+let j=0;
+function type(){
+  if(j<msg.length){
+    document.getElementById("text").innerHTML+=
+      msg[j]=="\n"?"<br>":msg[j];
+    j++;
+    setTimeout(type,80);
+  }
+}
+
+
+// Proposal
+function yes(){
+  alert("YAYYYY ❤️ Ankita, My love for you is increasing as always!! 🌹");
+}
+
+function nope(){
+  let b=event.target;
+  b.style.position="absolute";
+  b.style.left=Math.random()*70+"vw";
+  b.style.top=Math.random()*70+"vh";
+}
+
+// Hearts
+setInterval(()=>{
+  let h=document.createElement("div");
+  h.className="heart";
+  h.innerHTML="❤️";
+  h.style.left=Math.random()*100+"vw";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),6000);
+},300);
+function goType(){
+  go(3); // go to typewriter page
+  j = 0; // reset typing index
+  document.getElementById("text").innerHTML = "";
+  type(); // start typing now
+}
+function enableSound(){
+  const music = document.getElementById("bgMusic");
+  music.muted = false;
+  music.play();
+}
+
+</script>
+
+</body>
+</html>
